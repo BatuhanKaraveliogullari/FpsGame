@@ -12,11 +12,13 @@ public class CubeAnimation : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
-                anim.Play("Move");
+                if(anim != null)
+                    anim.Play("Move");
             }
             else
             {
-                anim.Play("Idle");
+                if (anim != null)
+                    anim.Play("Idle");
             }
         }
     }

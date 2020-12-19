@@ -14,29 +14,36 @@ public class HealthBarHandler : MonoBehaviour
 
     public void SetHealthBarValue(float value)
     {
-        HealthBarImage.fillAmount = value;
+        if(HealthBarImage != null)
+        {
+            HealthBarImage.fillAmount = value;
 
-        if (HealthBarImage.fillAmount < 0.3f)
-        {
-            SetHealthBarColor(Color.red);
-        }
-        else if (HealthBarImage.fillAmount < 0.5f)
-        {
-            SetHealthBarColor(Color.yellow);
-        }
-        else if(HealthBarImage.fillAmount <= 1)
-        {
-            SetHealthBarColor(Color.green);
+            if (HealthBarImage.fillAmount < 0.3f)
+            {
+                SetHealthBarColor(Color.red);
+            }
+            else if (HealthBarImage.fillAmount < 0.5f)
+            {
+                SetHealthBarColor(Color.yellow);
+            }
+            else if (HealthBarImage.fillAmount <= 1)
+            {
+                SetHealthBarColor(Color.green);
+            }
         }
     }
 
     public float GetHealthBarValue()
     {
-        return HealthBarImage.fillAmount;
+        if (HealthBarImage != null)
+            return HealthBarImage.fillAmount;
+        else
+            return 0f;
     }
 
     public void SetHealthBarColor(Color healthColor)
     {
-        HealthBarImage.color = healthColor;
+        if (HealthBarImage != null)
+            HealthBarImage.color = healthColor;
     }
 }

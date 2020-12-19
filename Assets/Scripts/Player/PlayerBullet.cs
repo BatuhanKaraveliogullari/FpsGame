@@ -26,7 +26,7 @@ public class PlayerBullet : Bullet
 
     private void Update()
     {
-        if(transform.GetChild(0).gameObject.activeInHierarchy)
+        if(transform.GetChild(0).gameObject.activeInHierarchy && playerGun != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, playerGun.hit.point, playerGun.bulletSpeed * Time.deltaTime);
         }
@@ -204,11 +204,14 @@ public class PlayerBullet : Bullet
     {
         ParticleSystem bulletImpact = ObjectPoolingManager.instance.GetBulletImpact();
 
-        bulletImpact.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-
-        if(!bulletImpact.isPlaying)
+        if(bulletImpact != null)
         {
-            bulletImpact.Play();
+            bulletImpact.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+            if (!bulletImpact.isPlaying)
+            {
+                bulletImpact.Play();
+            }
         }
     }
 
@@ -216,11 +219,14 @@ public class PlayerBullet : Bullet
     {
         ParticleSystem bloodEffect = ObjectPoolingManager.instance.GetBloodEffect();
 
-        bloodEffect.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-
-        if (!bloodEffect.isPlaying)
+        if(bloodEffect != null)
         {
-            bloodEffect.Play();
+            bloodEffect.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+            if (!bloodEffect.isPlaying)
+            {
+                bloodEffect.Play();
+            }
         }
     }
 }

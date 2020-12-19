@@ -12,6 +12,8 @@ public class GunSwitch : MonoBehaviour
 
     public AudioSource gunSwitch;
 
+    public GameObject[] gunImages;
+
     void Start()
     {
         SelectGun();
@@ -20,37 +22,79 @@ public class GunSwitch : MonoBehaviour
     void Update()
     {
         UserInput();
+
+        UpdateGunIcons();
+    }
+
+    void UpdateGunIcons()
+    {
+        switch (selctedGun)
+        {
+            case 0:
+                if(gunImages[0] != null)
+                    gunImages[0].GetComponent<CanvasGroup>().alpha = 1;
+                if(gunImages[1] != null)
+                    gunImages[1].GetComponent<CanvasGroup>().alpha = 0.5f;
+                if(gunImages[2] != null)
+                    gunImages[2].GetComponent<CanvasGroup>().alpha = 0.5f;
+                break;       
+            case 1:
+                if (gunImages[0] != null)
+                    gunImages[0].GetComponent<CanvasGroup>().alpha = 0.5f;
+                if (gunImages[1] != null)
+                    gunImages[1].GetComponent<CanvasGroup>().alpha = 1f;
+                if (gunImages[2] != null)
+                    gunImages[2].GetComponent<CanvasGroup>().alpha = 0.5f;
+                break;        
+            case 2:
+                if (gunImages[0] != null)
+                    gunImages[0].GetComponent<CanvasGroup>().alpha = 0.5f;
+                if (gunImages[1] != null)
+                    gunImages[1].GetComponent<CanvasGroup>().alpha = 0.5f;
+                if (gunImages[2] != null)
+                    gunImages[2].GetComponent<CanvasGroup>().alpha = 1f;
+                break;
+                
+
+
+        }
     }
 
     void UserInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && selctedGun != 0)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && selctedGun != 0 && !Input.GetButton("Fire1") && !Input.GetButton("Fire2"))
         {
-            gunSwitch.Play();
+            if(gunSwitch != null)
+                gunSwitch.Play();
 
-            ObjectPoolingManager.instance.DeactivateBullets();
+            if(ObjectPoolingManager.instance != null)
+                ObjectPoolingManager.instance.DeactivateBullets();
 
             selctedGun = 0;
 
             SelectGun();
         } 
         
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && selctedGun != 1)
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && selctedGun != 1 && !Input.GetButton("Fire1") && !Input.GetButton("Fire2"))
         {
-            gunSwitch.Play();
+            if (gunSwitch != null)
+                gunSwitch.Play();
 
-            ObjectPoolingManager.instance.DeactivateBullets();
+            if (ObjectPoolingManager.instance != null)
+                ObjectPoolingManager.instance.DeactivateBullets();
 
             selctedGun = 1;
 
             SelectGun();
         }   
         
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && selctedGun != 2)
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && selctedGun != 2 && !Input.GetButton("Fire1") && !Input.GetButton("Fire2"))
         {
-            gunSwitch.Play();
+            if (gunSwitch != null)
+                gunSwitch.Play();
 
-            ObjectPoolingManager.instance.DeactivateBullets();
+            if (ObjectPoolingManager.instance != null)
+                ObjectPoolingManager.instance.DeactivateBullets();
 
             selctedGun = 2;
 
@@ -62,7 +106,8 @@ public class GunSwitch : MonoBehaviour
     {
         for (int j = 0; j < guns.Length; j++)
         {
-            guns[j].gameObject.SetActive(false);
+            if(guns[j] != null)
+                guns[j].gameObject.SetActive(false);
         }
 
         int i = 0;
@@ -71,9 +116,12 @@ public class GunSwitch : MonoBehaviour
         {
             if (i == selctedGun)
             {
-                gun.gameObject.SetActive(true);
+                if(gun.gameObject != null)
+                {
+                    gun.gameObject.SetActive(true);
 
-                gun.GetComponent<PlayerGun>().isReloading = false;
+                    gun.gameObject.GetComponent<PlayerGun>().isReloading = false;
+                }
             }
 
             i++;

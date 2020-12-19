@@ -60,18 +60,22 @@ public class EnemyGun : Gun
         {
             EnemyBullet enemybullet = gameObject.transform.GetChild(i).GetComponent<EnemyBullet>();
 
-            enemyBullets.Add(enemybullet);
+            if(enemybullet != null)
+                enemyBullets.Add(enemybullet);
         }
 
         for (int i = 0; i < enemyBullets.Count; i++)
         {
-            if(!enemyBullets[i].transform.GetChild(0).gameObject.activeInHierarchy)
+            if(enemyBullets[i] != null)
             {
-                ObjectPoolingManager.instance.SetEnemyBulletInitialPosition(enemyBullets[i], enemyBullets[i].transform.parent.gameObject.GetComponent<EnemyGun>());
+                if (!enemyBullets[i].transform.GetChild(0).gameObject.activeInHierarchy)
+                {
+                    ObjectPoolingManager.instance.SetEnemyBulletInitialPosition(enemyBullets[i], enemyBullets[i].transform.parent.gameObject.GetComponent<EnemyGun>());
 
-                enemyBullets[i].transform.GetChild(0).gameObject.SetActive(true);
+                    enemyBullets[i].transform.GetChild(0).gameObject.SetActive(true);
 
-                return enemyBullets[i];
+                    return enemyBullets[i];
+                }
             }
         }
 

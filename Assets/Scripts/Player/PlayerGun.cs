@@ -67,11 +67,17 @@ public class PlayerGun : Gun
 
                 ObjectPoolingManager.instance.GetBullet();
 
-                gunSound.Play();
+                if(gunSound != null)
+                {
+                    gunSound.Play();
+                }
 
                 usedBullets++;
 
-                bulletCounter.text = usedBullets.ToString();
+                if(bulletCounter != null)
+                {
+                    bulletCounter.text = usedBullets.ToString();
+                }
             }
         }
     }
@@ -88,14 +94,20 @@ public class PlayerGun : Gun
         {
             yield return new WaitForSeconds(reloadTime / 100);
 
-            reloadImage.fillAmount = currentAmount;
+            if(reloadImage != null)
+            {
+                reloadImage.fillAmount = currentAmount;
+            }
 
             currentAmount += 0.01f;
         }
 
         usedBullets = 0;
 
-        bulletCounter.text = usedBullets.ToString();
+        if (bulletCounter != null)
+        {
+            bulletCounter.text = usedBullets.ToString();
+        }
 
         Debug.Log("Realoding is done" + gameObject.name);
 

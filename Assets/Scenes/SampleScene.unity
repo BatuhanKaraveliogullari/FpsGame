@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 46785831}
+  - component: {fileID: 46785832}
   m_Layer: 5
   m_Name: Pistol
   m_TagString: Untagged
@@ -160,6 +161,18 @@ RectTransform:
   m_AnchoredPosition: {x: -250, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
+--- !u!225 &46785832
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46785830}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &71516647
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +550,7 @@ MonoBehaviour:
   bulletCounter: {fileID: 921039373}
   reloadImage: {fileID: 2044755261}
   isReloading: 0
+  isFiring: 0
 --- !u!82 &186603831
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2704,6 +2718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1560692721}
+  - component: {fileID: 1560692722}
   m_Layer: 5
   m_Name: Rifle
   m_TagString: Untagged
@@ -2732,6 +2747,18 @@ RectTransform:
   m_AnchoredPosition: {x: -150, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
+--- !u!225 &1560692722
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560692720}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1570634356
 GameObject:
   m_ObjectHideFlags: 0
@@ -3403,6 +3430,7 @@ MonoBehaviour:
   bulletCounter: {fileID: 1415388101}
   reloadImage: {fileID: 515067697}
   isReloading: 0
+  isFiring: 0
 --- !u!82 &1883162378
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3633,6 +3661,7 @@ MonoBehaviour:
   bulletCounter: {fileID: 1739728028}
   reloadImage: {fileID: 774768510}
   isReloading: 0
+  isFiring: 0
 --- !u!82 &1952008680
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3813,6 +3842,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2050593165}
+  - component: {fileID: 2050593166}
   m_Layer: 5
   m_Name: Heavy
   m_TagString: Untagged
@@ -3841,6 +3871,18 @@ RectTransform:
   m_AnchoredPosition: {x: -50, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
+--- !u!225 &2050593166
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050593164}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2123682084
 GameObject:
   m_ObjectHideFlags: 0
@@ -4432,6 +4474,10 @@ MonoBehaviour:
   - {fileID: 1883162376}
   bullet: {fileID: 0}
   gunSwitch: {fileID: 9188575523689496494}
+  gunImages:
+  - {fileID: 46785830}
+  - {fileID: 1560692720}
+  - {fileID: 2050593164}
 --- !u!82 &9188575523689496494
 AudioSource:
   m_ObjectHideFlags: 0

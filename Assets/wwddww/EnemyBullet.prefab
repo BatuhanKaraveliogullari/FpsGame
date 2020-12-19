@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a7062da48c4ac2418653de97b7df609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 1
+  lifeTime: 0.5
   targetPosition: {x: 0, y: 0, z: 0}
   enterUpdateOnce: 0
 --- !u!1 &6642232922593016658

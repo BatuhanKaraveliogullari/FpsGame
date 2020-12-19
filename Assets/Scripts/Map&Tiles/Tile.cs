@@ -10,7 +10,6 @@ public class Tile : MonoBehaviour
     public int zIndex;
 
     Map m_map;
-
     public void Init(int x, int y, int z, Map map)
     {
         xIndex = x;

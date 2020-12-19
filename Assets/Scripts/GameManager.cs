@@ -6,7 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    #region Singleton 
     public static GameManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
 
     [Header("Game Parameters")]
     public int killedEnemy = 0;
@@ -29,16 +36,12 @@ public class GameManager : MonoBehaviour
     public bool isEnded = false;
     public bool isDied = false;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     void Start()
     {
         UpdateScoreText();
 
-        entryPanel.SetActive(true);
+        if(entryPanel != null)
+            entryPanel.SetActive(true);
     }
 
     void Update()
@@ -57,59 +60,74 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (entryPanel.activeInHierarchy)
+            if(entryPanel != null)
             {
-                entryPanel.SetActive(false);
+                if (entryPanel.activeInHierarchy)
+                {
+                    entryPanel.SetActive(false);
 
-                isStarted = true;
+                    isStarted = true;
+                }
             }
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
-            if (pausePanel.activeInHierarchy)
+            if(pausePanel != null)
             {
-                isStarted = true;
+                if (pausePanel.activeInHierarchy)
+                {
+                    isStarted = true;
 
-                pausePanel.SetActive(false);
+                    pausePanel.SetActive(false);
 
-                Time.timeScale = 1;
+                    Time.timeScale = 1;
+                }
             }
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (pausePanel.activeInHierarchy)
+            if(pausePanel != null && gameOverPanel != null)
             {
-                Application.Quit();
-            }
-            else if (gameOverPanel.activeInHierarchy)
-            {
-                Application.Quit();
+                if (pausePanel.activeInHierarchy)
+                {
+                    Application.Quit();
+                }
+                else if (gameOverPanel.activeInHierarchy)
+                {
+                    Application.Quit();
+                }
             }
         }
         else if (Input.GetKeyDown(KeyCode.P))
         {
-            if (gameOverPanel.activeInHierarchy)
+            if (pausePanel != null && gameOverPanel != null)
             {
-                gameOverPanel.SetActive(false);
-            }
-            else if (pausePanel.activeInHierarchy)
-            {
-                pausePanel.SetActive(false);
-            }
+                if (gameOverPanel.activeInHierarchy)
+                {
+                    gameOverPanel.SetActive(false);
+                }
+                else if (pausePanel.activeInHierarchy)
+                {
+                    pausePanel.SetActive(false);
+                }
 
-            Time.timeScale = 1;
+                Time.timeScale = 1;
 
-            SceneManager.LoadScene(0);
+                SceneManager.LoadScene(0);
+            }
         }
         else if (isStarted)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                isStarted = false;
+                if(pausePanel != null)
+                {
+                    isStarted = false;
 
-                pausePanel.SetActive(true);
+                    pausePanel.SetActive(true);
 
-                Time.timeScale = 0;
+                    Time.timeScale = 0;
+                }
             }
         }
     }
@@ -144,7 +162,8 @@ public class GameManager : MonoBehaviour
 
             niceTime = string.Format("{0:0}:{1:00}", minutes, seconds);
 
-            timerText.text = niceTime;
+            if (timerText != null)
+                    timerText.text = niceTime;
         }
     }
 
@@ -152,34 +171,40 @@ public class GameManager : MonoBehaviour
     {
         if(isDied)
         {
-            gameOverPanel.SetActive(true);
+            if(gameOverPanel != null)   
+                gameOverPanel.SetActive(true);
 
             endGameScoreText = GameObject.Find("EndGameScoreText").GetComponent<Text>();
 
             gameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
 
-            gameOverText.text = "You are killed by enemies.";
+            if(gameOverText != null)
+                gameOverText.text = "You are killed by enemies.";
 
             if (killedEnemyCount > 1)
             {
                 if(timer < 60f)
                 {
-                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
+                    if(endGameScoreText != null)
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
                 }
                 else
                 {
-                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
+                    if(endGameScoreText != null)
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
                 }
             }
             else
             {
                 if (timer < 60f)
                 {
-                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
+                    if(endGameScoreText != null)
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
                 }
                 else
                 {
-                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
+                    if(endGameScoreText != null)
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
                 }
             }
         }
@@ -187,67 +212,79 @@ public class GameManager : MonoBehaviour
         {
             if (time <= 100)
             {
-                gameOverPanel.SetActive(true);
+                if (gameOverPanel != null)
+                    gameOverPanel.SetActive(true);
 
                 endGameScoreText = GameObject.Find("EndGameScoreText").GetComponent<Text>();
 
                 gameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
 
-                gameOverText.text = "You killed enough enemy in a certain time.";
+                if (gameOverText != null)
+                    gameOverText.text = "You killed enough enemy in a certain time.";
 
                 if (killedEnemyCount > 1)
                 {
                     if (timer < 60f)
                     {
-                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
+                        if (endGameScoreText != null)
+                            endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
                     }
                     else
                     {
-                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
+                        if (endGameScoreText != null)
+                            endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
                     }
                 }
                 else
                 {
                     if (timer < 60f)
                     {
-                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
+                        if (endGameScoreText != null)
+                            endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
                     }
                     else
                     {
-                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
+                        if (endGameScoreText != null)
+                            endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
                     }
                 }
             }
             else
             {
-                gameOverPanel.SetActive(true);
+                if (gameOverPanel != null)
+                    gameOverPanel.SetActive(true);
 
                 endGameScoreText = GameObject.Find("EndGameScoreText").GetComponent<Text>();
 
                 gameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
 
-                gameOverText.text = "You killed enough enemy but did not in a certain time.";
+                if (gameOverText != null)
+                    gameOverText.text = "You killed enough enemy but did not in a certain time.";
 
                 if (killedEnemyCount > 1)
                 {
                     if (timer < 60f)
                     {
-                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
+                        if (endGameScoreText != null)
+                            endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
                     }
                     else
                     {
-                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
+                        if (endGameScoreText != null)
+                            endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
                     }
                 }
                 else
                 {
                     if (timer < 60f)
                     {
-                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
+                        if (endGameScoreText != null)
+                            endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
                     }
                     else
                     {
-                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
+                        if (endGameScoreText != null)
+                            endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
                     }
                 }
             }
@@ -256,6 +293,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScoreText()
     {
-        scoreText.text = killedEnemy.ToString();
+        if(scoreText != null)
+            scoreText.text = killedEnemy.ToString();
     }
 }

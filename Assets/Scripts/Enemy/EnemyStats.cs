@@ -18,17 +18,15 @@ public class EnemyStats : CharacterStats
 
         healthBar.SetHealthBarValue(1);
 
-        ObjectPoolingManager.instance.currentEnemyCount--;
-
-        ObjectPoolingManager.instance.diedEnemies.Add(gameObject);
-
-        ObjectPoolingManager.instance.SetNewEnemyProperties(gameObject);
+        if(ObjectPoolingManager.instance != null)
+            ObjectPoolingManager.instance.currentEnemyCount--;
+            ObjectPoolingManager.instance.diedEnemies.Add(gameObject);
+            ObjectPoolingManager.instance.SetNewEnemyProperties(gameObject);
+            ObjectPoolingManager.instance.RespawnEnemy();
         
-        ObjectPoolingManager.instance.RespawnEnemy();
-
-        GameManager.instance.killedEnemy++;
-
-        GameManager.instance.UpdateScoreText();
+        if (GameManager.instance != null)
+            GameManager.instance.killedEnemy++;
+            GameManager.instance.UpdateScoreText();
     }
 
     void DeathParticals()

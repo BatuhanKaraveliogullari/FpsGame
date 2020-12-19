@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     other.gameObject.SetActive(false);
 
-                    if (player != null)
+                    if (healthBarHandler != null)
                     {
                         player.currentHealth += increaseAmount;
 

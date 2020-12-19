@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class ObjectPoolingManager : MonoBehaviour
 {
+    #region Singleton
     public static ObjectPoolingManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
 
     [Header("Bullets")]
     public GameObject bulletPrefab;
@@ -57,11 +64,6 @@ public class ObjectPoolingManager : MonoBehaviour
     public Vector3 targetPos;
 
     public bool allSpawned = false;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     private void Start()
     {
@@ -138,13 +140,16 @@ public class ObjectPoolingManager : MonoBehaviour
 
         for (int i = 0; i < 15; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab);
+            if(bulletPrefab != null)
+            {
+                GameObject bullet = Instantiate(bulletPrefab);
 
-            bullet.name = "Bullet ("+ i +")";
+                bullet.name = "Bullet (" + i + ")";
 
-            bullet.transform.GetChild(0).gameObject.SetActive(false);
+                bullet.transform.GetChild(0).gameObject.SetActive(false);
 
-            bulletObjects.Add(bullet);
+                bulletObjects.Add(bullet);
+            }
         }
 
         SetBulletsNewParent(bulletObjects, currentBulletParent);
@@ -154,15 +159,18 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         for (int i = 0; i < 15; i++)
         {
-            if (!bulletObjects[i].transform.GetChild(0).gameObject.activeInHierarchy)
+            if(bulletObjects[i] != null)
             {
-                SetBulletInitialPosition(bulletObjects[i]);
+                if (!bulletObjects[i].transform.GetChild(0).gameObject.activeInHierarchy)
+                {
+                    SetBulletInitialPosition(bulletObjects[i]);
 
-                bulletObjects[i].transform.GetChild(0).gameObject.SetActive(true);
+                    bulletObjects[i].transform.GetChild(0).gameObject.SetActive(true);
 
-                bulletObjects[i].GetComponent<PlayerBullet>().isBorn = true;
+                    bulletObjects[i].GetComponent<PlayerBullet>().isBorn = true;
 
-                return bulletObjects[i];
+                    return bulletObjects[i];
+                }
             }
         }
 
@@ -171,7 +179,7 @@ public class ObjectPoolingManager : MonoBehaviour
 
     void SetBulletInitialPosition(GameObject bullet)
     {
-        if (bullet != null)
+        if (bullet != null && currentBulletParent != null)
         {
             bullet.transform.position = currentBulletParent.transform.position;
             bullet.transform.rotation = currentBulletParent.transform.rotation;
@@ -182,7 +190,8 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         for (int i = 0; i < bullets.Count; i++)
         {
-            bullets[i].transform.SetParent(bulletParent);
+            if(bullets[i] != null)
+                bullets[i].transform.SetParent(bulletParent);
         }
     }
 
@@ -213,7 +222,7 @@ public class ObjectPoolingManager : MonoBehaviour
 
     public void SetEnemyBulletInitialPosition(EnemyBullet enemyBullet, EnemyGun enemyGun)
     {
-        if (enemyBullet != null)
+        if (enemyBullet != null && enemyGun != null)
         {
             enemyBullet.transform.position = enemyGun.transform.position;
             enemyBullet.transform.rotation = enemyGun.transform.rotation;
@@ -224,9 +233,12 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         foreach (GameObject bullet in bulletObjects)
         {
-            if (bullet.transform.GetChild(0).gameObject.activeInHierarchy)
+            if(bullet != null)
             {
-                bullet.transform.GetChild(0).gameObject.SetActive(false);
+                if (bullet.transform.GetChild(0).gameObject.activeInHierarchy)
+                {
+                    bullet.transform.GetChild(0).gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -239,39 +251,47 @@ public class ObjectPoolingManager : MonoBehaviour
 
         for (int i = 0; i < enemyCount; i++)
         {
-            GameObject enemy = Instantiate(enemyPrefab);
-
-            SetNewEnemyProperties(enemy);
-
-            enemyObjects.Add(enemy);
-
-            currentEnemyCount++;
-            
-            EnemyGun enemyGun = Instantiate(enemyBulletParentPrefab);
-            
-            enemyGun.transform.SetParent(enemy.transform);
-
-            enemyGun.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1.1f, enemy.transform.position.z);
-
-            enemyBulletParent.Add(enemyGun);
-
-            enemyGun.name = "EnemyGun(" + i + ")";
-
-            for (int j = 0; j < 2; j++)
+            if(enemyPrefab != null)
             {
-                enemyBulletObjects = new List<GameObject>(2);
+                GameObject enemy = Instantiate(enemyPrefab);
 
-                GameObject enemyBullet = Instantiate(enemyBulletPrefab);
+                SetNewEnemyProperties(enemy);
 
-                enemyBullet.name = "EnemyBullet(" + j + ")";
+                enemyObjects.Add(enemy);
 
-                enemyBullet.transform.SetParent(enemyGun.transform);
+                currentEnemyCount++;
 
-                enemyBullet.transform.GetChild(0).gameObject.SetActive(false);
+                if(enemyBulletParentPrefab != null)
+                {
+                    EnemyGun enemyGun = Instantiate(enemyBulletParentPrefab);
 
-                enemyBulletObjects.Add(enemyBullet);
+                    enemyGun.transform.SetParent(enemy.transform);
+
+                    enemyGun.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1.1f, enemy.transform.position.z);
+
+                    enemyBulletParent.Add(enemyGun);
+
+                    enemyGun.name = "EnemyGun(" + i + ")";
+
+                    for (int j = 0; j < 2; j++)
+                    {
+                        enemyBulletObjects = new List<GameObject>(2);
+
+                        if(enemyBulletPrefab != null)
+                        {
+                            GameObject enemyBullet = Instantiate(enemyBulletPrefab);
+
+                            enemyBullet.name = "EnemyBullet(" + j + ")";
+
+                            enemyBullet.transform.SetParent(enemyGun.transform);
+
+                            enemyBullet.transform.GetChild(0).gameObject.SetActive(false);
+
+                            enemyBulletObjects.Add(enemyBullet);
+                        }
+                    }
+                }
             }
-            
         }
     }
 
@@ -279,7 +299,8 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         HealthBarHandler healthBar = enemy.transform.GetComponentInChildren<HealthBarHandler>();
 
-        healthBar.SetHealthBarValue(1);
+        if(healthBar != null)
+            healthBar.SetHealthBarValue(1);
 
         for (int i = 0; i < 100; i++)
         {
@@ -312,19 +333,22 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         for (int i = 0; i < diedEnemies.Count; i++)
         {
-            if (!diedEnemies[i].activeInHierarchy)
+            if(diedEnemies[i] != null)
             {
-                yield return new WaitForSeconds(spawnTimeOfEnemies);
-
-                if (i < diedEnemies.Count)
+                if (!diedEnemies[i].activeInHierarchy)
                 {
-                    ActivateEnemy(diedEnemies[i]);
+                    yield return new WaitForSeconds(spawnTimeOfEnemies);
 
-                    CheckEnemyCount(enemyObjects);
+                    if (i < diedEnemies.Count)
+                    {
+                        ActivateEnemy(diedEnemies[i]);
 
-                    diedEnemies[i].GetComponent<EnemyController>().SetWalls();
+                        CheckEnemyCount(enemyObjects);
 
-                    diedEnemies.Remove(diedEnemies[i]);
+                        diedEnemies[i].GetComponent<EnemyController>().SetWalls();
+
+                        diedEnemies.Remove(diedEnemies[i]);
+                    }
                 }
             }
         }
@@ -332,9 +356,12 @@ public class ObjectPoolingManager : MonoBehaviour
 
     void ActivateEnemy(GameObject enemy)
     {
-        enemy.SetActive(true);
+        if(enemy != null)
+        {
+            enemy.SetActive(true);
 
-        enemy.transform.GetChild(2).gameObject.GetComponent<EnemyGun>().enemyIsJustSpawn = true;
+            enemy.transform.GetChild(2).gameObject.GetComponent<EnemyGun>().enemyIsJustSpawn = true;
+        }
     }
 
     void CheckEnemyCount(List<GameObject> enemyObject)
@@ -343,16 +370,19 @@ public class ObjectPoolingManager : MonoBehaviour
 
         foreach (GameObject enemy in enemyObject)
         {
-            if (enemy.activeInHierarchy)
+            if(enemy != null)
             {
-                activeEnemy.Add(enemy);
-            }
-            else
-            {
-                activeEnemy.Remove(enemy);
-            }
+                if (enemy.activeInHierarchy)
+                {
+                    activeEnemy.Add(enemy);
+                }
+                else
+                {
+                    activeEnemy.Remove(enemy);
+                }
 
-            currentEnemyCount = activeEnemy.Count;
+                currentEnemyCount = activeEnemy.Count;
+            }
         }
     }
     #endregion
@@ -364,13 +394,16 @@ public class ObjectPoolingManager : MonoBehaviour
 
         for (int i = 0; i < healthBoosterObjects.Capacity; i++)
         {
-            GameObject healthBooster = Instantiate(healthBoosterPrefab);
+            if(healthBoosterPrefab != null)
+            {
+                GameObject healthBooster = Instantiate(healthBoosterPrefab);
 
-            healthBooster.transform.SetParent(healthBoostersParent);
+                healthBooster.transform.SetParent(healthBoostersParent);
 
-            healthBoosterObjects.Add(healthBooster);
+                healthBoosterObjects.Add(healthBooster);
 
-            healthBooster.SetActive(false);
+                healthBooster.SetActive(false);
+            }
         }
     }
 
@@ -380,13 +413,16 @@ public class ObjectPoolingManager : MonoBehaviour
 
         for (int i = 0; i < healthBoosterObjects.Capacity; i++)
         {
-            if (!healthBoosterObjects[i].activeInHierarchy)
+            if(healthBoosterObjects[i] != null)
             {
-                SetNewHealthBoosterProperties(healthBoosterObjects[i]);
+                if (!healthBoosterObjects[i].activeInHierarchy)
+                {
+                    SetNewHealthBoosterProperties(healthBoosterObjects[i]);
 
-                yield return new WaitForSeconds(spawnTimeOfHealthBooster);
+                    yield return new WaitForSeconds(spawnTimeOfHealthBooster);
 
-                healthBoosterObjects[i].SetActive(true);
+                    healthBoosterObjects[i].SetActive(true);
+                }
             }
         }
 
@@ -445,13 +481,16 @@ public class ObjectPoolingManager : MonoBehaviour
 
         for (int i = 0; i < 15; i++)
         {
-            ParticleSystem bulletImpact = Instantiate(bulletImpactPrefab);
+            if(bulletImpactPrefab != null)
+            {
+                ParticleSystem bulletImpact = Instantiate(bulletImpactPrefab);
 
-            bulletImpacts.Add(bulletImpact);
+                bulletImpacts.Add(bulletImpact);
 
-            bulletImpact.name = "Bullet Impact(" + i + ")";
+                bulletImpact.name = "Bullet Impact(" + i + ")";
 
-            bulletImpact.transform.SetParent(bulletImpactsParent);
+                bulletImpact.transform.SetParent(bulletImpactsParent);
+            }
         }
     }  
 
@@ -469,9 +508,12 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         for (int i = 0; i < bulletImpacts.Count; i++)
         {
-            if(!bulletImpacts[i].isPlaying)
+            if(bulletImpacts[i] != null)
             {
-                return bulletImpacts[i];
+                if (!bulletImpacts[i].isPlaying)
+                {
+                    return bulletImpacts[i];
+                }
             }
         }
 
@@ -484,13 +526,16 @@ public class ObjectPoolingManager : MonoBehaviour
 
         for (int i = 0; i < 15; i++)
         {
-            ParticleSystem bloodEffect = Instantiate(bloodEffectPrefab);
+            if(bloodEffectPrefab != null)
+            {
+                ParticleSystem bloodEffect = Instantiate(bloodEffectPrefab);
 
-            bloodEffects.Add(bloodEffect);
+                bloodEffects.Add(bloodEffect);
 
-            bloodEffect.name = "Blood Effect(" + i + ")";
+                bloodEffect.name = "Blood Effect(" + i + ")";
 
-            bloodEffect.transform.SetParent(bloodEffectsParent);
+                bloodEffect.transform.SetParent(bloodEffectsParent);
+            }
         }
     }
 
@@ -498,9 +543,12 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         for (int i = 0; i < bloodEffects.Count; i++)
         {
-            if (!bloodEffects[i].isPlaying)
+            if(bloodEffects[i] != null)
             {
-                return bloodEffects[i];
+                if (!bloodEffects[i].isPlaying)
+                {
+                    return bloodEffects[i];
+                }
             }
         }
 
@@ -513,13 +561,16 @@ public class ObjectPoolingManager : MonoBehaviour
 
         for (int i = 0; i < enemyCount; i++)
         {
-            ParticleSystem deathEffect = Instantiate(deathEffectPrefab);
+            if(deathEffectPrefab != null)
+            {
+                ParticleSystem deathEffect = Instantiate(deathEffectPrefab);
 
-            deathEffects.Add(deathEffect);
+                deathEffects.Add(deathEffect);
 
-            deathEffect.name = "Death Effect(" + i + ")";
+                deathEffect.name = "Death Effect(" + i + ")";
 
-            deathEffect.transform.SetParent(deathEffectsParent);
+                deathEffect.transform.SetParent(deathEffectsParent);
+            }
         }
     }
 
@@ -527,9 +578,12 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         for (int i = 0; i < deathEffects.Count; i++)
         {
-            if (!deathEffects[i].isPlaying)
+            if(deathEffects[i] != null)
             {
-                return deathEffects[i];
+                if (!deathEffects[i].isPlaying)
+                {
+                    return deathEffects[i];
+                }
             }
         }
 

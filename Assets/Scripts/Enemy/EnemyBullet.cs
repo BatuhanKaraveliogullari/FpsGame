@@ -41,7 +41,7 @@ public class EnemyBullet : Bullet
 
             Gun gun = transform.parent.gameObject.GetComponent<EnemyGun>();
 
-            if(healthBar != null && player != null)
+            if(healthBar != null && player != null && gun.gameObject != null)
             {
                 player.TakeDamage(gun.damage);
 

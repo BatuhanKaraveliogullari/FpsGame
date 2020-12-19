@@ -67,54 +67,60 @@ public class Map : MonoBehaviour
         {
             GameObject tile = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity) as GameObject;
 
-            tile.name = "Tile (" + x + "," + y + "," + z + ")";
+            if(tile != null)
+            {
+                tile.name = "Tile (" + x + "," + y + "," + z + ")";
 
-            m_tiles[x, y, z] = tile.GetComponent<Tile>();
+                m_tiles[x, y, z] = tile.GetComponent<Tile>();
 
-            tile.transform.SetParent(groundParent);
+                tile.transform.SetParent(groundParent);
 
-            m_tiles[x, y, z].Init(x, y, z, this);
+                m_tiles[x, y, z].Init(x, y, z, this);
+            }
         }
     }
 
     void SetupSideWalls()
     {
-        int k = 1;
-
-        for (int i = 2; i < width; i += 5)
+        if(sideWallPrefab != null)
         {
-            GameObject sideWall = Instantiate(sideWallPrefab, new Vector3(i, 2, 0), Quaternion.Euler(0, 0, 0), wallParent);
+            int k = 1;
 
-            sideWall.name = "Bottom Side Wall (" + k + ")";
+            for (int i = 2; i < width; i += 5)
+            {
+                GameObject sideWall = Instantiate(sideWallPrefab, new Vector3(i, 2, 0), Quaternion.Euler(0, 0, 0), wallParent);
 
-            k++;
-        }
+                sideWall.name = "Bottom Side Wall (" + k + ")";
 
-        for (int i = 2; i < depth; i += 5)
-        {
-            GameObject sideWall = Instantiate(sideWallPrefab, new Vector3(50, 2, i), Quaternion.Euler(0, -90, 0), wallParent);
+                k++;
+            }
 
-            sideWall.name = "Right Side Wall (" + k + ")";
+            for (int i = 2; i < depth; i += 5)
+            {
+                GameObject sideWall = Instantiate(sideWallPrefab, new Vector3(50, 2, i), Quaternion.Euler(0, -90, 0), wallParent);
 
-            k++;
-        }
+                sideWall.name = "Right Side Wall (" + k + ")";
 
-        for (int i = 47; i > 0; i -= 5)
-        {
-            GameObject sideWall = Instantiate(sideWallPrefab, new Vector3(i, 2, 50), Quaternion.Euler(0, 0, 0), wallParent);
+                k++;
+            }
 
-            sideWall.name = "Top Side Wall (" + k + ")";
+            for (int i = 47; i > 0; i -= 5)
+            {
+                GameObject sideWall = Instantiate(sideWallPrefab, new Vector3(i, 2, 50), Quaternion.Euler(0, 0, 0), wallParent);
 
-            k++;
-        }
+                sideWall.name = "Top Side Wall (" + k + ")";
 
-        for (int i = 48; i > 0; i -= 5)
-        {
-            GameObject sideWall = Instantiate(sideWallPrefab, new Vector3(-1, 2, i), Quaternion.Euler(0, 90, 0), wallParent);
+                k++;
+            }
 
-            sideWall.name = "Left Side Wall (" + k + ")";
+            for (int i = 48; i > 0; i -= 5)
+            {
+                GameObject sideWall = Instantiate(sideWallPrefab, new Vector3(-1, 2, i), Quaternion.Euler(0, 90, 0), wallParent);
 
-            k++;
+                sideWall.name = "Left Side Wall (" + k + ")";
+
+                k++;
+            }
         }
     }
 
@@ -213,15 +219,18 @@ public class Map : MonoBehaviour
 
         foreach (StartingWalls wall in walls)
         {
-            for (int i = -2; i < 3; i++)
+            if(wall != null)
             {
-                for (int k = -2; k < 3; k++)
+                for (int i = -2; i < 3; i++)
                 {
-                    Vector3 wallPosition = new Vector3(wall.x + i, wall.y, wall.z + k);
-
-                    if (objectPosition == wallPosition)
+                    for (int k = -2; k < 3; k++)
                     {
-                        return true;
+                        Vector3 wallPosition = new Vector3(wall.x + i, wall.y, wall.z + k);
+
+                        if (objectPosition == wallPosition)
+                        {
+                            return true;
+                        }
                     }
                 }
             }

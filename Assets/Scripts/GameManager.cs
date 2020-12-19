@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public Text timerText;
     Text gameOverText;
     Text endGameScoreText;
+    string niceTime;
 
     [Header("Panels")]
     public GameObject entryPanel;
@@ -44,20 +45,12 @@ public class GameManager : MonoBehaviour
     {
         InputControls();
 
-        if(isStarted)
+        UpdateTimer();
+
+        if(killedEnemy > ObjectPoolingManager.instance.enemyCount + 10)
         {
-            timer += Time.deltaTime;
-
-            int minutes = Mathf.FloorToInt(timer / 60F);
-
-            int seconds = Mathf.FloorToInt(timer - minutes * 60);
-
-            string niceTime = string.Format("{0:0}:{1:00}", minutes, seconds);
-
-            timerText.text = niceTime;
+            FinishGame();
         }
-
-        FinishGame();
     }
 
     void InputControls()
@@ -121,13 +114,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateScoreText()
-    {
-        scoreText.text = killedEnemy.ToString();
-    }
-
     void FinishGame()
     {
+        ObjectPoolingManager.instance.InstantiateSmokeEffect();
+
         Vector3 finalArea = ObjectPoolingManager.instance.smokeEffect.transform.position;
 
         float finalDistance = Vector3.Distance(finalArea, PlayerManager.instance.player.transform.position);
@@ -139,6 +129,22 @@ public class GameManager : MonoBehaviour
             isStarted = false;
 
             EndGameControl(timer, killedEnemy);
+        }
+    }
+
+    void UpdateTimer()
+    {
+        if (isStarted)
+        {
+            timer += Time.deltaTime;
+
+            int minutes = Mathf.FloorToInt(timer / 60F);
+
+            int seconds = Mathf.FloorToInt(timer - minutes * 60);
+
+            niceTime = string.Format("{0:0}:{1:00}", minutes, seconds);
+
+            timerText.text = niceTime;
         }
     }
 
@@ -156,11 +162,25 @@ public class GameManager : MonoBehaviour
 
             if (killedEnemyCount > 1)
             {
-                endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(time) + " seconds";
+                if(timer < 60f)
+                {
+                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
+                }
+                else
+                {
+                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
+                }
             }
             else
             {
-                endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(time) + " seconds";
+                if (timer < 60f)
+                {
+                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
+                }
+                else
+                {
+                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
+                }
             }
         }
         else
@@ -177,11 +197,25 @@ public class GameManager : MonoBehaviour
 
                 if (killedEnemyCount > 1)
                 {
-                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(time) + " seconds";
+                    if (timer < 60f)
+                    {
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
+                    }
+                    else
+                    {
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
+                    }
                 }
                 else
                 {
-                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(time) + " seconds";
+                    if (timer < 60f)
+                    {
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
+                    }
+                    else
+                    {
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
+                    }
                 }
             }
             else
@@ -196,13 +230,32 @@ public class GameManager : MonoBehaviour
 
                 if (killedEnemyCount > 1)
                 {
-                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(time) + " seconds";
+                    if (timer < 60f)
+                    {
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + Mathf.Floor(timer) + " seconds";
+                    }
+                    else
+                    {
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemies in " + niceTime;
+                    }
                 }
                 else
                 {
-                    endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(time) + " seconds";
+                    if (timer < 60f)
+                    {
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + Mathf.Floor(timer) + " seconds";
+                    }
+                    else
+                    {
+                        endGameScoreText.text = "You killed " + killedEnemyCount + " enemy in " + niceTime;
+                    }
                 }
             }
         }
+    }
+
+    public void UpdateScoreText()
+    {
+        scoreText.text = killedEnemy.ToString();
     }
 }

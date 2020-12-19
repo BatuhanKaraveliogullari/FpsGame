@@ -60,6 +60,7 @@ public class Map : MonoBehaviour
         SetupSideWalls();
     }
 
+    #region Making Map
     private void MakeTiles(GameObject prefab, int x, int y, int z)
     {
         if (prefab != null && IsWithinBounds(x, y, z))
@@ -193,7 +194,9 @@ public class Map : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Checklist
     bool IsWithinBounds(int x, int y, int z)
     {
         return ((x >= 0 && x < width) && (y >= 0 && y < height) && (z >= 0 && z < depth));
@@ -226,4 +229,5 @@ public class Map : MonoBehaviour
 
         return false;
     }
+    #endregion
 }

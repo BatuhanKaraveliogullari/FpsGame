@@ -127,10 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b1fda6db569134398d573145cad641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 0.1
+  lifeTime: 0.005
   playerGun: {fileID: 0}
   gunSwitch: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   isBorn: 0
+  isCalculated: 0
 --- !u!54 &969106312412173698
 Rigidbody:
   m_ObjectHideFlags: 0

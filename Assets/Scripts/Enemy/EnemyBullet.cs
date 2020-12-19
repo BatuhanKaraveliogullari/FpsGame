@@ -54,15 +54,11 @@ public class EnemyBullet : Bullet
         {
             transform.GetChild(0).gameObject.SetActive(false);
 
-            //Debug.Log("Hit ground");
-
             enterUpdateOnce = false;
         }
         else if(collision.gameObject.CompareTag("Wall"))
         {
             transform.GetChild(0).gameObject.SetActive(false);
-
-            //Debug.Log("Hit Wall");
 
             enterUpdateOnce = false;
         }

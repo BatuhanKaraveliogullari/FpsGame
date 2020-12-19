@@ -180,21 +180,24 @@ public class PlayerBullet : Bullet
     {
         isBorn = false;
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 1; i <= 100; i++)
         {
             yield return new WaitForSeconds(lifeTime / 100);
 
-            Debug.Log(transform.name + "living");
+            Debug.Log(transform.name + "living" + lifeTime/100);
+
+            if(i==100)
+            {
+                if (transform.GetChild(0).gameObject.activeInHierarchy)
+                {
+                    transform.GetChild(0).gameObject.SetActive(false);
+
+                    Debug.Log(transform.name + "died. with life time");
+                }
+
+                transform.position = playerGun.transform.position;
+            }
         }
-
-        if (transform.GetChild(0).gameObject.activeInHierarchy)
-        {
-            transform.GetChild(0).gameObject.SetActive(false);
-
-            Debug.Log(transform.name + "died. with life time");
-        }
-
-        transform.position = playerGun.transform.position;
     }
 
     void CollisionBulletParticals()

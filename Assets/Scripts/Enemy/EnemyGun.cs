@@ -10,6 +10,8 @@ public class EnemyGun : Gun
 
     public EnemyController enemyController;
 
+    public bool enemyIsJustSpawn = false;
+
     private void Start()
     {
         enemyController = gameObject.transform.GetComponentInParent<EnemyController>();
@@ -17,6 +19,13 @@ public class EnemyGun : Gun
 
     void Update()
     {
+        if(enemyIsJustSpawn)
+        {
+            usedBullets = 0;
+
+            enemyIsJustSpawn = false;
+        }
+
         if (enemyController.enemyDetected && Time.time >= otherTimeToFireToPleyer && GameManager.instance.isStarted)
         {
             if (mag > usedBullets)

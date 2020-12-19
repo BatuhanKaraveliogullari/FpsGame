@@ -64,8 +64,6 @@ public class EnemyController : MonoBehaviour
 
             float distance = Vector3.Distance(targetPlayer.position, transform.position);
 
-            //Debug.Log(distance);
-
             if (distance <= lookRadius && !playerInvisible)
             {
                 FaceTarget();
@@ -97,8 +95,8 @@ public class EnemyController : MonoBehaviour
         {
             if (wall.GetComponent<Wall>().angle == 0 || wall.GetComponent<Wall>().angle == 180)
             {
-                w1 = new Vector3(wall.position.x - 2.5f, 2, wall.position.z);
-                w2 = new Vector3(wall.position.x + 2.5f, 2, wall.position.z);
+                w1 = new Vector3(wall.position.x - 3f, 2, wall.position.z);
+                w2 = new Vector3(wall.position.x + 3f, 2, wall.position.z);
 
                 value1 = ((x - transform.position.x) * (transform.position.z - w1.z)) - ((z - transform.position.z) * (transform.position.x - w1.x));
                 value2 = ((x - transform.position.x) * (transform.position.z - w2.z)) - ((z - transform.position.z) * (transform.position.x - w2.x));
@@ -138,8 +136,8 @@ public class EnemyController : MonoBehaviour
             }
             else if (wall.GetComponent<Wall>().angle == 90)
             {
-                w1 = new Vector3(wall.position.x, 2, wall.position.z - 2.5f);
-                w2 = new Vector3(wall.position.x, 2, wall.position.z + 2.5f);
+                w1 = new Vector3(wall.position.x, 2, wall.position.z - 3f);
+                w2 = new Vector3(wall.position.x, 2, wall.position.z + 3f);
 
                 value1 = ((x - transform.position.x) * (transform.position.z - w1.z)) - ((z - transform.position.z) * (transform.position.x - w1.x));
                 value2 = ((x - transform.position.x) * (transform.position.z - w2.z)) - ((z - transform.position.z) * (transform.position.x - w2.x));
@@ -179,8 +177,8 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                w1 = new Vector3(wall.position.x - (2.5f * Mathf.Cos(Mathf.Deg2Rad * wall.GetComponent<Wall>().angle)), 2, wall.position.z - (2.5f * Mathf.Sin(Mathf.Deg2Rad * wall.GetComponent<Wall>().angle)));
-                w2 = new Vector3(wall.position.x + (2.5f * Mathf.Cos(Mathf.Deg2Rad * wall.GetComponent<Wall>().angle)), 2, wall.position.z + (2.5f * Mathf.Sin(Mathf.Deg2Rad * wall.GetComponent<Wall>().angle)));
+                w1 = new Vector3(wall.position.x - (3f * Mathf.Cos(Mathf.Deg2Rad * wall.GetComponent<Wall>().angle)), 2, wall.position.z - (3f * Mathf.Sin(Mathf.Deg2Rad * wall.GetComponent<Wall>().angle)));
+                w2 = new Vector3(wall.position.x + (3f * Mathf.Cos(Mathf.Deg2Rad * wall.GetComponent<Wall>().angle)), 2, wall.position.z + (3f * Mathf.Sin(Mathf.Deg2Rad * wall.GetComponent<Wall>().angle)));
 
                 value1 = ((x - transform.position.x) * (transform.position.z - w1.z)) - ((z - transform.position.z) * (transform.position.x - w1.x));
                 value2 = ((x - transform.position.x) * (transform.position.z - w2.z)) - ((z - transform.position.z) * (transform.position.x - w2.x));

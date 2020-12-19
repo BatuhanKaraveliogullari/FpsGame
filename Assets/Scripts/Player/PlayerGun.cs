@@ -33,9 +33,14 @@ public class PlayerGun : Gun
 
     private void Update()
     {
-        if(Input.GetButton("Fire1") && Time.time >= otherTimeToFire && !isReloading)
+        ShootControl();
+    }
+
+    void ShootControl()
+    {
+        if (Input.GetButton("Fire1") && Time.time >= otherTimeToFire && !isReloading)
         {
-            if(mag > usedBullets)
+            if (mag > usedBullets)
             {
                 otherTimeToFire = Time.time + 1f / fireRate;
 
@@ -46,7 +51,7 @@ public class PlayerGun : Gun
                 StartCoroutine(ReloadTimerRoutine());
             }
         }
-        else if(Input.GetButtonDown("Fire2") && usedBullets != 0 && !isReloading)
+        else if (Input.GetButtonDown("Fire2") && usedBullets != 0 && !isReloading)
         {
             StartCoroutine(ReloadTimerRoutine());
         }

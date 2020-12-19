@@ -35,11 +35,14 @@ public class EnemyStats : CharacterStats
     {
         ParticleSystem deathEffect = ObjectPoolingManager.instance.GetDeathEffect();
 
-        deathEffect.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-
-        if (!deathEffect.isPlaying)
+        if(deathEffect != null)
         {
-            deathEffect.Play();
+            deathEffect.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+            if (!deathEffect.isPlaying)
+            {
+                deathEffect.Play();
+            }
         }
     }
 }

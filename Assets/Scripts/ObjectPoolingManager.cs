@@ -77,8 +77,6 @@ public class ObjectPoolingManager : MonoBehaviour
 
         InstantiateDeathEffect();
 
-        InstantiateSmokeEffect();
-
         if (GameObject.FindGameObjectWithTag("Enemy") != null)
         {
             enemyController = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
@@ -106,6 +104,34 @@ public class ObjectPoolingManager : MonoBehaviour
         SetNewParent();
     }
 
+    bool IsThereAnyEnemyOrHealthBar(float x, float y, float z)
+    {
+        Vector3 objectPosition = new Vector3(x, y, z);
+
+        foreach (GameObject enemy in enemyObjects)
+        {
+            if (enemy.transform.position == objectPosition)
+            {
+                Debug.Log("There is enemy");
+
+                return true;
+            }
+        }
+
+        foreach (GameObject healthBar in healthBoosterObjects)
+        {
+            if (healthBar.transform.position == objectPosition)
+            {
+                Debug.Log("There is healthbar");
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    #region Bullet Actions
     private void InstantiateBullets()
     {
         bulletObjects = new List<GameObject>(15);
@@ -204,7 +230,9 @@ public class ObjectPoolingManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Enemy Actions
     private void InstantiateEnemy()
     {
         enemyObjects = new List<GameObject>(enemyCount);
@@ -305,6 +333,8 @@ public class ObjectPoolingManager : MonoBehaviour
     void ActivateEnemy(GameObject enemy)
     {
         enemy.SetActive(true);
+
+        enemy.transform.GetChild(2).gameObject.GetComponent<EnemyGun>().enemyIsJustSpawn = true;
     }
 
     void CheckEnemyCount(List<GameObject> enemyObject)
@@ -325,7 +355,9 @@ public class ObjectPoolingManager : MonoBehaviour
             currentEnemyCount = activeEnemy.Count;
         }
     }
+    #endregion
 
+    #region Health Booster Actions
     private void InstantiateHealthBoosters()
     {
         SetNewHealthBoosterCount(enemyCount, enemyController.lookRadius);
@@ -404,7 +436,9 @@ public class ObjectPoolingManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Effect Actions
     void InstantiateBulletImpact()
     {
         bulletImpacts = new List<ParticleSystem>(15);
@@ -421,11 +455,14 @@ public class ObjectPoolingManager : MonoBehaviour
         }
     }  
 
-    void InstantiateSmokeEffect()
+    public void InstantiateSmokeEffect()
     {
-        Vector3 finishPoint = new Vector3(Map.instance.width - 1, Map.instance.height, Map.instance.depth - 1);
+        if(smokeEffect == null)
+        {
+            Vector3 finishPoint = new Vector3(Map.instance.width - 1, Map.instance.height, Map.instance.depth - 1);
 
-        smokeEffect = Instantiate(smokeEffectPrefab, finishPoint, Quaternion.identity);
+            smokeEffect = Instantiate(smokeEffectPrefab, finishPoint, Quaternion.identity);
+        }
     }
 
     public ParticleSystem GetBulletImpact()
@@ -498,31 +535,5 @@ public class ObjectPoolingManager : MonoBehaviour
 
         return null;
     }
-
-    bool IsThereAnyEnemyOrHealthBar(float x, float y, float z)
-    {
-        Vector3 objectPosition = new Vector3(x, y, z);
-
-        foreach (GameObject enemy in enemyObjects)
-        {
-            if (enemy.transform.position == objectPosition)
-            {
-                Debug.Log("There is enemy");
-
-                return true;
-            }
-        }
-
-        foreach (GameObject healthBar in healthBoosterObjects)
-        {
-            if (healthBar.transform.position == objectPosition)
-            {
-                Debug.Log("There is healthbar");
-
-                return true;
-            }
-        }
-
-        return false;
-    }
+    #endregion
 }

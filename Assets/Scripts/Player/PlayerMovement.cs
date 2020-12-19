@@ -27,13 +27,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(GameManager.instance.isStarted)
+        PlayerMove();
+    }
+
+    void PlayerMove()
+    {
+        if (GameManager.instance.isStarted)
         {
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
-
-            Debug.Log(x);
-            Debug.Log(z);
 
             Vector3 move = transform.right * x + transform.forward * z;
 

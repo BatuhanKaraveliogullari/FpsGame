@@ -273,9 +273,9 @@ public class ObjectPoolingManager : MonoBehaviour
 
                     enemyGun.name = "EnemyGun(" + i + ")";
 
-                    for (int j = 0; j < 2; j++)
+                    for (int j = 0; j < 5; j++)
                     {
-                        enemyBulletObjects = new List<GameObject>(2);
+                        enemyBulletObjects = new List<GameObject>(5);
 
                         if(enemyBulletPrefab != null)
                         {

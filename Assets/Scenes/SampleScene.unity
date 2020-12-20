@@ -550,7 +550,6 @@ MonoBehaviour:
   bulletCounter: {fileID: 921039373}
   reloadImage: {fileID: 2044755261}
   isReloading: 0
-  isFiring: 0
 --- !u!82 &186603831
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3430,7 +3429,6 @@ MonoBehaviour:
   bulletCounter: {fileID: 1415388101}
   reloadImage: {fileID: 515067697}
   isReloading: 0
-  isFiring: 0
 --- !u!82 &1883162378
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3661,7 +3659,6 @@ MonoBehaviour:
   bulletCounter: {fileID: 1739728028}
   reloadImage: {fileID: 774768510}
   isReloading: 0
-  isFiring: 0
 --- !u!82 &1952008680
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3950,6 +3947,7 @@ MonoBehaviour:
   isStarted: 0
   isEnded: 0
   isDied: 0
+  player: {fileID: 9188575523689496492}
 --- !u!1 &2138677391
 GameObject:
   m_ObjectHideFlags: 0

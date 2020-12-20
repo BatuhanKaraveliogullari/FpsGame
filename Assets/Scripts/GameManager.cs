@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
     public bool isEnded = false;
     public bool isDied = false;
 
+    [Header("Player")]
+    public GameObject player;
+
     void Start()
     {
         UpdateScoreText();
@@ -138,7 +141,7 @@ public class GameManager : MonoBehaviour
 
         Vector3 finalArea = ObjectPoolingManager.instance.smokeEffect.transform.position;
 
-        float finalDistance = Vector3.Distance(finalArea, PlayerManager.instance.player.transform.position);
+        float finalDistance = Vector3.Distance(finalArea, player.transform.position);
 
         if(finalDistance < 2)
         {

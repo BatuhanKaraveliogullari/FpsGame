@@ -13,12 +13,11 @@ public class EnemyController : MonoBehaviour
     public List<Transform> currentwalls;
 
     public bool enemyDetected = false;
-
     public bool playerInvisible = false;
 
     void Start()
     {
-        targetPlayer = PlayerManager.instance.player.transform;
+        targetPlayer = GameObject.Find("FirstPersonPlayer").GetComponent<Transform>();
 
         SetWalls();
     }

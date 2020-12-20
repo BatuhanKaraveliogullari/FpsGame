@@ -56,7 +56,7 @@ public class EnemyGun : Gun
     {
         List<EnemyBullet> enemyBullets = new List<EnemyBullet>();
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 5; i++)
         {
             EnemyBullet enemybullet = gameObject.transform.GetChild(i).GetComponent<EnemyBullet>();
 

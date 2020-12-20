@@ -7,7 +7,14 @@ using UnityEngine.Rendering.Universal;
 
 public class Map : MonoBehaviour
 {
+    #region Singleton
     public static Map instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
 
     [System.Serializable] public class StartingWalls
     {
@@ -43,11 +50,6 @@ public class Map : MonoBehaviour
     Tile[,,] m_tiles;
 
     int counter = 0;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     void Start()
     {
@@ -215,22 +217,26 @@ public class Map : MonoBehaviour
 
     public bool IsInDangerRangeOfWall(float x, float y, float z)
     {
-        Vector3 objectPosition = new Vector3(x, y, z);
-
         foreach (StartingWalls wall in walls)
         {
-            if(wall != null)
-            {
-                for (int i = -2; i < 3; i++)
-                {
-                    for (int k = -2; k < 3; k++)
-                    {
-                        Vector3 wallPosition = new Vector3(wall.x + i, wall.y, wall.z + k);
+            Vector3 wallPosition = new Vector3(wall.x, wall.y, wall.z);
+            Vector3 objectPosition = new Vector3(x, y, z);
 
-                        if (objectPosition == wallPosition)
-                        {
-                            return true;
-                        }
+            if (wall != null)
+            {
+                Vector3 w1 = new Vector3(wall.x - 3f, 2, wall.z);
+                Vector3 w2 = new Vector3(wall.x + 3f, 2, wall.z);
+
+                float value = ((x - w1.x) * (w1.z - w2.z)) - ((z - w1.z) * (w1.x - w2.x));
+                float distance = Vector3.Distance(wallPosition, objectPosition);
+
+                if(value == 0)
+                {
+                    if(distance >= -5f && distance <= 5f)
+                    {
+                        UnityEngine.Debug.Log(objectPosition);
+
+                        return true;
                     }
                 }
             }

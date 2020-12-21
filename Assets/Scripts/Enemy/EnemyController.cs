@@ -239,7 +239,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public List<Transform> WhichWallIsBetweenEnemyAndPlayer()
+    List<Transform> WhichWallIsBetweenEnemyAndPlayer()
     {
         Vector3 w1;
         Vector3 w2;

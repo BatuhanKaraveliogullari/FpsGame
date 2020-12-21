@@ -54,9 +54,6 @@ public class GunSwitch : MonoBehaviour
                 if (gunImages[2] != null)
                     gunImages[2].GetComponent<CanvasGroup>().alpha = 1f;
                 break;
-                
-
-
         }
     }
 

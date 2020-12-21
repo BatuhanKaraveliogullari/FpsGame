@@ -245,7 +245,7 @@ public class ObjectPoolingManager : MonoBehaviour
     #endregion
 
     #region Enemy Actions
-    private void InstantiateEnemy()
+    void InstantiateEnemy()
     {
         enemyObjects = new List<GameObject>(enemyCount);
 

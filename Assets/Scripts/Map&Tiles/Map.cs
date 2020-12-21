@@ -219,24 +219,60 @@ public class Map : MonoBehaviour
     {
         foreach (StartingWalls wall in walls)
         {
-            Vector3 wallPosition = new Vector3(wall.x, wall.y, wall.z);
-            Vector3 objectPosition = new Vector3(x, y, z);
-
-            if (wall != null)
+            if(wall != null)
             {
-                Vector3 w1 = new Vector3(wall.x - 3f, 2, wall.z);
-                Vector3 w2 = new Vector3(wall.x + 3f, 2, wall.z);
+                Vector3 wallPosition = new Vector3(wall.x, wall.y, wall.z);
+                Vector3 objectPosition = new Vector3(x, y, z);
 
-                float value = ((x - w1.x) * (w1.z - w2.z)) - ((z - w1.z) * (w1.x - w2.x));
+                Vector3 w1;
+                Vector3 w2;
+
+                float value; 
                 float distance = Vector3.Distance(wallPosition, objectPosition);
 
-                if(value == 0)
+                if (wall.angle == 0 || wall.angle == 180)
                 {
-                    if(distance >= -5f && distance <= 5f)
-                    {
-                        UnityEngine.Debug.Log(objectPosition);
+                    w1 = new Vector3(wall.x - 3f, 2, wall.z);
+                    w2 = new Vector3(wall.x + 3f, 2, wall.z);
 
-                        return true;
+                    value = ((x - w1.x) * (w1.z - w2.z)) - ((z - w1.z) * (w1.x - w2.x));
+
+                    if (value == 0)
+                    {
+                        if (distance >= -5f && distance <= 5f)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                else if(wall.angle == 90)
+                {
+                    w1 = new Vector3(wall.x, 2, wall.z - 3f);
+                    w2 = new Vector3(wall.x, 2, wall.z + 3f);
+
+                    value = ((x - w1.x) * (w1.z - w2.z)) - ((z - w1.z) * (w1.x - w2.x));
+
+                    if (value == 0)
+                    {
+                        if (distance >= -5f && distance <= 5f)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    w1 = new Vector3(wall.x - (3f * Mathf.Cos(Mathf.Deg2Rad * wall.angle)), 2, wall.z - (3f * Mathf.Sin(Mathf.Deg2Rad * wall.angle)));
+                    w2 = new Vector3(wall.x + (3f * Mathf.Cos(Mathf.Deg2Rad * wall.angle)), 2, wall.z + (3f * Mathf.Sin(Mathf.Deg2Rad * wall.angle)));
+
+                    value = ((x - w1.x) * (w1.z - w2.z)) - ((z - w1.z) * (w1.x - w2.x));
+
+                    if (value == 0)
+                    {
+                        if (distance >= -5f && distance <= 5f)
+                        {
+                            return true;
+                        }
                     }
                 }
             }

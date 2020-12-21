@@ -17,7 +17,10 @@ public class MouseLook : MonoBehaviour
 
     private void LateUpdate()
     {
-        MouseControl();
+        if(GameManager.instance.isStarted)
+        {
+            MouseControl();
+        }
     }
 
     void MouseControl()

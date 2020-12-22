@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
+    public CharacterController controller;//first person shooter objesinin yapısında bulunan bir component 
 
-    public float speed = 12f;
-    public float gravity = -9.81f;
+    public float speed = 12f;//charcter speed
+    public float gravity = -9.81f;//yer çekimi
 
-    Vector3 velocity;
+    Vector3 velocity;//vectorel hız variableı
 
-    public HealthBooster healthBooster;
+    public HealthBarHandler healthBarHandler;//collision burada kontrol edilince eklene healthide buırada çağırdım
 
-    public HealthBarHandler healthBarHandler;
-
-    public PlayerStats player;
+    public PlayerStats player;//health activiteleri için first person shooter orneği
 
     private void Start()
     {
@@ -34,14 +32,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GameManager.instance.isStarted)
         {
-            float x = Input.GetAxis("Horizontal");
-            float z = Input.GetAxis("Vertical");
+            float x = Input.GetAxis("Horizontal");//a ve d den alınan -1 ile 1 arasındaki değerler
+            float z = Input.GetAxis("Vertical");//w ve s den alınan -1 ile 1 arasındaki değerler
 
-            Vector3 move = transform.right * x + transform.forward * z;
+            Vector3 move = transform.right * x + transform.forward * z;//karakteri yatayda hareket ettiren vector.
 
             controller.Move(move * speed * Time.deltaTime);
 
-            velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * Time.deltaTime;//yerçekimini sağlayan vector.
 
             controller.Move(velocity * Time.deltaTime);
         }
@@ -51,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(player != null)
         {
-            int increaseAmount = (player.maxHealth - player.currentHealth);
+            int increaseAmount = (player.maxHealth - player.currentHealth);//booster karakterin canını başlangıçteki seviyeye tamamlar.
 
             Debug.Log(increaseAmount);
 

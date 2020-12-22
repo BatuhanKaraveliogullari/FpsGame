@@ -1709,8 +1709,6 @@ MonoBehaviour:
   diedEnemies: []
   enemyBulletPrefab: {fileID: 2483896640373349726, guid: 04be2dbd06c4c8c4f9bf12feee7062b7, type: 3}
   enemyBulletObjects: []
-  enemyBulletParentPrefab: {fileID: 76233933815972200, guid: a83545ea8fa3bce45b3e250bb196df55, type: 3}
-  enemyBullet: {fileID: 1587878088417230408, guid: 04be2dbd06c4c8c4f9bf12feee7062b7, type: 3}
   healthBoosterPrefab: {fileID: 4224490556728310731, guid: d7960469d656a9d48ab7680be7370c9f, type: 3}
   healthBoosterObjects: []
   bulletImpactPrefab: {fileID: 19800002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
@@ -1731,12 +1729,13 @@ MonoBehaviour:
   - {fileID: 1952008678}
   - {fileID: 186603829}
   - {fileID: 1883162376}
+  enemyBulletParentPrefab: {fileID: 76233933815972200, guid: a83545ea8fa3bce45b3e250bb196df55, type: 3}
   enemyBulletParent: []
   enemyController: {fileID: 0}
   gunSwitch: {fileID: 0}
   spawnTimeOfEnemies: 1
   spawnTimeOfHealthBooster: 5
-  enemyCount: 10
+  enemyCount: 40
   currentEnemyCount: 0
   targetPos: {x: 0, y: 0, z: 0}
   allSpawned: 0
@@ -1943,270 +1942,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walls:
   - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 11
-    y: 2
-    z: 6
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 16
-    y: 2
-    z: 6
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 21
-    y: 2
-    z: 6
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 26
-    y: 2
-    z: 6
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 31
-    y: 2
-    z: 6
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 37
-    y: 2
-    z: 6
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 34
-    y: 2
-    z: 8
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 26
-    y: 2
-    z: 8
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 9
-    y: 2
-    z: 9
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 12
-    y: 2
-    z: 11
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 31
-    y: 2
-    z: 13
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 34
-    y: 2
-    z: 13
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 42
-    y: 2
-    z: 12
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 9
-    y: 2
-    z: 14
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 42
-    y: 2
-    z: 17
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 34
-    y: 2
-    z: 18
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 6
-    y: 2
-    z: 16
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 4
-    y: 2
-    z: 19
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 4
-    y: 2
-    z: 24
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 32
-    y: 2
-    z: 21
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 27
-    y: 2
-    z: 21
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 22
-    y: 2
-    z: 21
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 20
-    y: 2
-    z: 20
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 42
-    y: 2
-    z: 22
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 42
-    y: 2
-    z: 27
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 25
-    y: 2
-    z: 28
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 20
-    y: 2
-    z: 28
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
     x: 7
     y: 2
-    z: 26
-    angle: 0
+    z: 9
+    angle: 31.2
   - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 9
+    x: 11
     y: 2
-    z: 29
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 9
-    y: 2
-    z: 34
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 22
-    y: 2
-    z: 30
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 28
-    y: 2
-    z: 30
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 33
-    y: 2
-    z: 30
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 38
-    y: 2
-    z: 30
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 42
-    y: 2
-    z: 30
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 45
-    y: 2
-    z: 33
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 45
-    y: 2
-    z: 38
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 47
-    y: 2
-    z: 40
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 32
-    y: 2
-    z: 36
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 29
-    y: 2
-    z: 38
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 19
-    y: 2
-    z: 38
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 9
-    y: 2
-    z: 39
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 9
-    y: 2
-    z: 44
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 12
-    y: 2
-    z: 41
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 17
-    y: 2
-    z: 45
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 27
-    y: 2
-    z: 41
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 29
-    y: 2
-    z: 44
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 33
-    y: 2
-    z: 48
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 39
-    y: 2
-    z: 43
-    angle: 90
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 47
-    y: 2
-    z: 44
-    angle: 0
-  - wallPrefab: {fileID: 5809261069561689366, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-    x: 44
-    y: 2
-    z: 48
-    angle: 90
-  wallObjects: []
+    z: 7
+    angle: 145.7
   wallParent: {fileID: 1665180368}
   groundParent: {fileID: 71516648}
-  width: 50
+  width: 20
   height: 1
-  depth: 50
+  depth: 25
   whiteTile: {fileID: 2381290697806745722, guid: d0e7cff76076f6d48bbb7825bcddbdc4, type: 3}
   blackTile: {fileID: 218237152685896282, guid: a4ed885fed8c06343aaa8fbcbe9ce17d, type: 3}
   sideWallPrefab: {fileID: 2838150564111044172, guid: 09fa0833e95030c49a366fa7d03ecd5d, type: 3}
-  playerPrefab: {fileID: 9188575523177185454, guid: 2584bf655d7ca4e49bde49ec90439c85, type: 3}
 --- !u!4 &980727335
 Transform:
   m_ObjectHideFlags: 0
@@ -4021,7 +3773,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.4696e-41, z: 0, w: 9.403955e-38}
+  m_BoundingSphereOverride: {x: 0, y: 4.3395e-41, z: 0, w: 0.0000000061409082}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

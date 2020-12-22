@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     #region Singleton 
-    public static GameManager instance;
+    public static GameManager instance;//hiyerarşide static obje olduğu için bir static örnek tanımı
 
     private void Awake()
     {
@@ -16,35 +16,35 @@ public class GameManager : MonoBehaviour
     #endregion
 
     [Header("Game Parameters")]
-    public int killedEnemy = 0;
-    public float timer = 0;
+    public int killedEnemy = 0;//öldürülen enemy sayısı
+    public float timer = 0;//oyun içerisinde geçen süre
 
     [Header("Texts")]
-    public Text scoreText;
-    public Text timerText;
-    Text gameOverText;
-    Text endGameScoreText;
-    string niceTime;
+    public Text scoreText;//oyun ekranındaki score text
+    public Text timerText;//oyun ekranındaki time text
+    Text gameOverText;//oyun bitiminde description text
+    Text endGameScoreText;//oyun bitimindeki score text
+    string niceTime;//oyun içindeki time dakika ve saniye olarak yazdıkmak için null bir variable
 
     [Header("Panels")]
-    public GameObject entryPanel;
-    public GameObject pausePanel;
-    public GameObject gameOverPanel;
+    public GameObject entryPanel;//oyun giriş panel
+    public GameObject pausePanel;//oyun içi pause panel
+    public GameObject gameOverPanel;//oyun bitim ekranı
 
     [Header("Controls")]
-    public bool isStarted = false;
-    public bool isEnded = false;
-    public bool isDied = false;
+    public bool isStarted = false;//oyunun başlangıcını kontrol eden bool
+    public bool isEnded = false;//oyunun normal bitimini kontrol eden bool
+    public bool isDied = false;//oyunun bitimini ölümle kontrol eden bool
 
     [Header("Player")]
-    public GameObject player;
+    public GameObject player;//first person shooter
 
     void Start()
     {
         UpdateScoreText();
 
         if(entryPanel != null)
-            entryPanel.SetActive(true);
+            entryPanel.SetActive(true);//oyun başlangıcında açıklamayla birlikte oyunu açmak
     }
 
     void Update()
@@ -53,15 +53,15 @@ public class GameManager : MonoBehaviour
 
         UpdateTimer();
 
-        if(killedEnemy > ObjectPoolingManager.instance.enemyCount + 10)
+        if(killedEnemy > ObjectPoolingManager.instance.enemyCount + 10)//oyun kontrolü enemy sayısından 10 fazla adam öldürmeyle birlikte oyun bitirilebiliyor
         {
             FinishGame();
         }
     }
 
-    void InputControls()
+    void InputControls()//oyun içi panellerin kontrolünü sağlayan method
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))//oyun başlangıcını kontrol eden tuş ataması
         {
             if(entryPanel != null)
             {
@@ -69,11 +69,11 @@ public class GameManager : MonoBehaviour
                 {
                     entryPanel.SetActive(false);
 
-                    isStarted = true;
+                    isStarted = true; //burada oyun başladı demek
                 }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.C))
+        else if (Input.GetKeyDown(KeyCode.C))//c tuşu ancak ve ancak pause panel açıkken çalışır yanı oyun içindede basıldığında eğer pause panel açık değilse bu if blockunun içine giremeyecek ve  görevi oyunu devam ettirmek
         {
             if(pausePanel != null)
             {
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetKeyDown(KeyCode.Q))//q oyundan çıkmak için kullanılan bir tuştur, pause panel ve gameover panel açıksa çalışır ancak
         {
             if(pausePanel != null && gameOverPanel != null)
             {
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.P))
+        else if (Input.GetKeyDown(KeyCode.P))//p play again tuşudur. oyun bitiminde ve durdurulduğunda çalışır. ve bu paneller açıldığında oyun durduğu içi aynı c tuşunda olduğu gibi oyunu devam ettirmek gerekir. ve tabi play again olduğu için scene tekrar yüklenir.
         {
             if (pausePanel != null && gameOverPanel != null)
             {
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         }
         else if (isStarted)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))//pause paneli açan tuştur. ve ancak oyun oynanıyorken çalışır ve oyunu durdurur.
             {
                 if(pausePanel != null)
                 {
@@ -137,13 +137,13 @@ public class GameManager : MonoBehaviour
 
     void FinishGame()
     {
-        ObjectPoolingManager.instance.InstantiateSmokeEffect();
+        ObjectPoolingManager.instance.InstantiateSmokeEffect();//burada static bir obje örneği olan pooling sisteminden smoke komutunu çağırıyor ve final point oyuncuya hissettiriliyor.
 
-        Vector3 finalArea = ObjectPoolingManager.instance.smokeEffect.transform.position;
+        Vector3 finalArea = ObjectPoolingManager.instance.smokeEffect.transform.position;//burada oyun bitim bölgesinin positionı belirleniyor. o positionda smokenın positionı oluyor.
 
-        float finalDistance = Vector3.Distance(finalArea, player.transform.position);
+        float finalDistance = Vector3.Distance(finalArea, player.transform.position);//burada player ile finish positionunun farkı alınıyor.
 
-        if(finalDistance < 2)
+        if(finalDistance < 2)//bu fark 2 den küçükse oyun bitmiş sayılıyor.
         {
             Debug.Log("EndGame");
 
@@ -155,6 +155,10 @@ public class GameManager : MonoBehaviour
 
     void UpdateTimer()
     {
+        /*
+         * burada süreyi kontrol edip dakika ve saniye cinsinden screene yazıyoruz. ve update te çağırıyoruz.
+         */
+
         if (isStarted)
         {
             timer += Time.deltaTime;
@@ -172,6 +176,13 @@ public class GameManager : MonoBehaviour
 
     public void EndGameControl(float time, int killedEnemyCount)
     {
+        /*
+         * burada ise ölüm ve normal bitiş olarak iki ayrı bitiş senaryosu vardır.
+         * bu senaryolarda farklı olan ise sadece yazılan textlerdir.
+         * enemy count un sayısına göre enemy mi yoksa enemies mi yazılacağın agöre if blocklarıyla ayrılmıştır. 
+         * ve timeı kontrol eden yani belirli bir zaman içerisinde kalıbı tamamen örnektir o oyunun yapısına ve mapteki duvarlara göre değişiklik göstermektedir.
+         */
+
         if(isDied)
         {
             if(gameOverPanel != null)   
@@ -294,7 +305,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateScoreText()
+    public void UpdateScoreText()//burada score screendaki score texti yazdırmamıza yardımcı olan bir method var ve public yaptım diğer yerlerden çağırılsın diye.
     {
         if(scoreText != null)
             scoreText.text = killedEnemy.ToString();

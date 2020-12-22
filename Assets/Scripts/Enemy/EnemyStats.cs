@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
-    public EnemyController enemy;
+    public EnemyController enemy;//bu calssın üzerinde olduğu öbejenin başka classlarındaki değişiklikleriçin tanımlanmış olan öbje
 
-    public override void Die()
+    public override void Die()//polymorphism örneği ölüm komutu
     {
         base.Die();
 
@@ -31,11 +31,11 @@ public class EnemyStats : CharacterStats
 
     void DeathParticals()
     {
-        ParticleSystem deathEffect = ObjectPoolingManager.instance.GetDeathEffect();
+        ParticleSystem deathEffect = ObjectPoolingManager.instance.GetDeathEffect();//daha rahat kontrol edebilmek adına get edilen effect bir partical objeye atanır.
 
         if(deathEffect != null)
         {
-            deathEffect.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            deathEffect.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);//enemynin olduğu yerde ölmesi için konum set edilir.
 
             if (!deathEffect.isPlaying)
             {

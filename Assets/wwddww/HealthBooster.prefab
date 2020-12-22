@@ -112,7 +112,6 @@ GameObject:
   - component: {fileID: 4224490556728310732}
   - component: {fileID: 4224490556728310734}
   - component: {fileID: 4224490556728310733}
-  - component: {fileID: 4224490556728310735}
   m_Layer: 0
   m_Name: HealthBooster
   m_TagString: Booster
@@ -164,16 +163,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4224490556728310735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4224490556728310731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 347db8160ec531341bf5451466df6aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthAmount: 50

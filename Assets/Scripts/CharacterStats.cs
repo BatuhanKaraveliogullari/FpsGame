@@ -2,11 +2,13 @@
 
 public class CharacterStats : MonoBehaviour
 {
-    public int maxHealth = 100;
+    //base stats classıdır.
 
-    public int currentHealth;
+    public int maxHealth = 100;//set edilmiş max karakter healthi
 
-    public HealthBarHandler healthBar;
+    public int currentHealth;//oyun içinde ki anlık health
+
+    public HealthBarHandler healthBar;//health bar health ile birlikte çalıştığı için bir örnek obje
 
     private void Start()
     {
@@ -14,22 +16,22 @@ public class CharacterStats : MonoBehaviour
 
         if(healthBar != null)
         {
-            healthBar.SetHealthBarValue(currentHealth / currentHealth);
+            healthBar.SetHealthBarValue(currentHealth / currentHealth);//başlangıçteki healthbar setlemesi
         }
     }
 
-    public void RespawnHealthControl()
+    public void RespawnHealthControl()//spawn sonrası health setlemesi
     {
         currentHealth = Mathf.Clamp(maxHealth, 0, maxHealth);
     }
 
-    public void TakeDamage (int damage)
+    public void TakeDamage (int damage)//karakterin damage alması
     {
-        damage = Mathf.Clamp(damage, 0, int.MaxValue);
+        damage = Mathf.Clamp(damage, 0, int.MaxValue);//damagenin pozitif olma kontrolü
 
         currentHealth -= damage;
 
-        if(currentHealth <= 0)
+        if(currentHealth <= 0)//ölme durumu
         {
             Die();
 
@@ -37,7 +39,7 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    public virtual void Die()
+    public virtual void Die()//sanal method.
     {
         
     }

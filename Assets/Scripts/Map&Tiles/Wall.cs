@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    public float angle;
+    public float angle;//wall objesine ait bir public class ve bunu tek özelliği angle çünkü farklı yapay zekalarda bunu ölçmek için oluşturuldu.
 }

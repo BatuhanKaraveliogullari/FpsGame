@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats
 {
-    public override void Die()
+    //inherit edilmiş bir classtır.
+
+    public override void Die()//polymorphism örneğidir.
     {
         base.Die();
 

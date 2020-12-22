@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class EnemyGun : Gun
 {
-    private float otherTimeToFireToPleyer = 0f;
+    private float otherTimeToFireToPleyer = 0f;//enemy gun firerate
 
-    public EnemyBullet enemyBullet;
+    public EnemyBullet enemyBullet;//ateşlenecek bulletın obje örneklemesi
 
-    public EnemyController enemyController;
+    public EnemyController enemyController;//eteşleme kontrolü için oradan çekeceğim verilerin obje örneklemesi
 
-    public bool enemyIsJustSpawn = false;
+    public bool enemyIsJustSpawn = false;//enemy spawnlanır spawnlanmaz alınacak veyadeğişecek özelliklerin konrtrolü
 
     private void Start()
     {
-        enemyController = gameObject.transform.GetComponentInParent<EnemyController>();
+        enemyController = gameObject.transform.GetComponentInParent<EnemyController>();//bu component this componentin üzerinde bulunduğu bir component olduğu için start methodunda çağırılır.
     }
 
     void Update()
     {
         if(enemyIsJustSpawn)
         {
-            usedBullets = 0;
+            usedBullets = 0;//enemy her yeni spawnlanduığında kullanılan bullet sıfırlanır.
 
             enemyIsJustSpawn = false;
         }
 
-        if (enemyController.enemyDetected && Time.time >= otherTimeToFireToPleyer && GameManager.instance.isStarted)
+        if (enemyController.enemyDetected && Time.time >= otherTimeToFireToPleyer && GameManager.instance.isStarted)//
         {
-            if (mag > usedBullets)
+            if (mag > usedBullets)//şarjörün bitip bitmediği kontrol edilir
             {
-                otherTimeToFireToPleyer = Time.time + 1f / fireRate;
+                otherTimeToFireToPleyer = Time.time + 1f / fireRate;//burada fire rate süresi ayarlanır.
 
                 usedBullets++;
 
@@ -43,7 +43,7 @@ public class EnemyGun : Gun
         }
     }
 
-    public override void Shoot()
+    public override void Shoot()//polymorphism örneği
     {
         base.Shoot();
         
@@ -52,19 +52,19 @@ public class EnemyGun : Gun
         gunSound.Play();
     }
 
-    public EnemyBullet GetEnemyBullet()
+    public EnemyBullet GetEnemyBullet()//bullet ateşlenir.
     {
         List<EnemyBullet> enemyBullets = new List<EnemyBullet>();
 
         for (int i = 0; i < 5; i++)
         {
-            EnemyBullet enemybullet = gameObject.transform.GetChild(i).GetComponent<EnemyBullet>();
+            EnemyBullet enemybullet = gameObject.transform.GetChild(i).GetComponent<EnemyBullet>();//daha rahat kontrol etmek adına inspectorda enemy gun objesi altında oluşturulmuş enemy bulletlar burada local bir liste atılır.
 
             if(enemybullet != null)
                 enemyBullets.Add(enemybullet);
         }
 
-        for (int i = 0; i < enemyBullets.Count; i++)
+        for (int i = 0; i < enemyBullets.Count; i++)//burada ise çağırılır.
         {
             if(enemyBullets[i] != null)
             {
@@ -82,7 +82,7 @@ public class EnemyGun : Gun
         return null;
     }
 
-    IEnumerator ReloadTimerRoutine()
+    IEnumerator ReloadTimerRoutine()//şarjör bitimiyle relaod komutudur.
     {
         yield return new WaitForSeconds(reloadTime);
 

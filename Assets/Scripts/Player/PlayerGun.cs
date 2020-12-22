@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class PlayerGun : Gun
 {
-    public Camera fpsCam;
+    public Camera fpsCam;//hit variableını oluşturmak adınayapılmış örneklendirilmiş bir camera variableı
 
-    public RaycastHit hit;
+    public RaycastHit hit;//bulletın target variableını kontrol etmek adına oluşturulmış bir raycasthit variableı
 
-    public Text bulletCounter;
+    public Text bulletCounter;//bulletların sayısını scenede gösteren variable
 
-    public Image reloadImage;
+    public Image reloadImage;//gunu image propertysi
 
-    public bool isReloading = false;
+    public bool isReloading = false;//reload control boolu
 
-    float otherTimeToFire = 0f;
+    float otherTimeToFire = 0f;//firerate control variableı
 
-    readonly float range = 100f;
+    readonly float range = 100f;//hit variable için constant bir variable
 
     private void Start()
     {
@@ -36,9 +36,9 @@ public class PlayerGun : Gun
         ShootControl();
     }
 
-    void ShootControl()
+    void ShootControl()//ateş etmeyi control eden method
     {
-        if (Input.GetButton("Fire1") && Time.time >= otherTimeToFire && !isReloading)
+        if (Input.GetButton("Fire1") && Time.time >= otherTimeToFire && !isReloading)//sol clickle ateş kontrolu ve basılı tutulduğunda çalışan method birkaç parametreyle birlikte
         {
             if (mag > usedBullets)
             {
@@ -51,17 +51,17 @@ public class PlayerGun : Gun
                 StartCoroutine(ReloadTimerRoutine());
             }
         }
-        else if (Input.GetButtonDown("Fire2") && usedBullets != 0 && !isReloading)
+        else if (Input.GetButtonDown("Fire2") && usedBullets != 0 && !isReloading)//keyfi reload, sağ click ile çalışan method
         {
             StartCoroutine(ReloadTimerRoutine());
         }
     }
 
-    public override void Shoot()
+    public override void Shoot()//polymorphism örneği base classtaki sanal methoda averride edilmiş method
     {
         if(GameManager.instance.isStarted)
         {
-            if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
+            if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))//hit variable içini dolu olduğunu gösteren boolen
             {
                 Debug.Log(hit.transform.name);
 
@@ -88,9 +88,9 @@ public class PlayerGun : Gun
 
         Debug.Log("reloading....." + gameObject.name);
 
-        float currentAmount = 0.01f;
+        float currentAmount = 0.01f;//imageın dolduren local bir variable
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 100; i++)//imageı reload eden for loop ama toplamda bekleme süresi aynı oluyor
         {
             yield return new WaitForSeconds(reloadTime / 100);
 

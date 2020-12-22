@@ -3,16 +3,16 @@ using UnityEngine.UI;
  
 public class HealthBarHandler : MonoBehaviour
 {
-    public Image HealthBarImage;
+    public Image HealthBarImage;//scenedeki healtbar imageleri
 
     private void Start()
     {
-        HealthBarImage = GetComponent<Image>();
+        HealthBarImage = GetComponent<Image>();//scale i kontrol etmek için bir atama
 
-        SetHealthBarColor(Color.green);
+        SetHealthBarColor(Color.green);//başlangıç için health 100 yani max olduğu için green atama
     }
 
-    public void SetHealthBarValue(float value)
+    public void SetHealthBarValue(float value)//değişen valueya göre yeni color atamsı
     {
         if(HealthBarImage != null)
         {
@@ -33,7 +33,7 @@ public class HealthBarHandler : MonoBehaviour
         }
     }
 
-    public float GetHealthBarValue()
+    public float GetHealthBarValue()//health barın anlık konumu ile ilgili değer get etme
     {
         if (HealthBarImage != null)
             return HealthBarImage.fillAmount;
@@ -41,7 +41,7 @@ public class HealthBarHandler : MonoBehaviour
             return 0f;
     }
 
-    public void SetHealthBarColor(Color healthColor)
+    public void SetHealthBarColor(Color healthColor)//health barın colorunu setleme
     {
         if (HealthBarImage != null)
             HealthBarImage.color = healthColor;

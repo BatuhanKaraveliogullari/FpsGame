@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class GunSwitch : MonoBehaviour
 {
-    public int selctedGun = 0;
+    public int selctedGun = 0;//seçilen silah
 
-    public Transform[] guns;
+    public Transform[] guns;//seçilecek olan gun arrayi
 
-    public Bullet bullet;
+    public AudioSource gunSwitch;//silah değişim sesi
 
-    public AudioSource gunSwitch;
-
-    public GameObject[] gunImages;
+    public GameObject[] gunImages;//uı kontrolü için array
 
     void Start()
     {
@@ -26,7 +24,7 @@ public class GunSwitch : MonoBehaviour
         UpdateGunIcons();
     }
 
-    void UpdateGunIcons()
+    void UpdateGunIcons()//seçilen gunun ekranda diğerlerinde farklı görülmesini sağlayan method.canvas group componenti içerisindeki alpha değerleriyle oynayarak
     {
         switch (selctedGun)
         {
@@ -57,7 +55,7 @@ public class GunSwitch : MonoBehaviour
         }
     }
 
-    void UserInput()
+    void UserInput()//1,2 ve 3 tuşlarıyla gunswitch yapma ve olamsı gereken kontroller. mesela tuşlara basılırken gun switch yapılamaz
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && selctedGun != 0 && !Input.GetButton("Fire1") && !Input.GetButton("Fire2"))
         {
@@ -101,7 +99,7 @@ public class GunSwitch : MonoBehaviour
 
     void SelectGun()
     {
-        for (int j = 0; j < guns.Length; j++)
+        for (int j = 0; j < guns.Length; j++)//seçilmeyen gun objelerini hiyerarşide setactive false ediyoruz sadece seçilen true oluyor. oda aşağıdaki loopta
         {
             if(guns[j] != null)
                 guns[j].gameObject.SetActive(false);
